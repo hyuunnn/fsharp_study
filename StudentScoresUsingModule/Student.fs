@@ -26,7 +26,10 @@ module Student = // F#의 module은 Class 역할인 것 같다.
         let scores =
             elements
             |> Array.skip 2
-            |> Array.map (fun s -> Float.fromStringOrNum(50.0, s))
+            //|> Array.map (fun s -> Float.fromStringOrNum(50.0, s))
+            |> Array.map TestResult.fromString
+            |> Array.choose TestResult.tryEffectiveScore
+
         let meanScore = scores |> Array.average
         let minScore = scores |> Array.min
         let maxScore = scores |> Array.max

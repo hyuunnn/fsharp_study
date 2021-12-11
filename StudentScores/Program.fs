@@ -31,6 +31,7 @@ let summarize filePath =
     |> Array.iter printMeanScore
 
 [<EntryPoint>]
+// StudentScores.txt
 let main argv =
     if argv.Length = 1 then
         let filePath = argv.[0]

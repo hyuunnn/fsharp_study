@@ -1,66 +1,6 @@
 open System
 open System.IO
-
-module Float = 
-
-    let tryFromString s = 
-        if s = "N/A" then
-            None
-        else
-            Some (float s)
-
-    let fromStringOrNum num s = 
-        s
-        |> tryFromString
-        |> Option.defaultValue num
-
-type Student =
-    {
-        Name : string
-        Id : string
-        MeanScore : float
-        MinScore : float
-        MaxScore : float
-    }
-
-module Student = // F#의 module은 Class 역할인 것 같다.
-
-    let fromString (s : string) =
-        let elements = s.Split('\t')
-        let name = elements.[0]
-        let id = elements.[1]
-        let scores =
-            elements
-            |> Array.skip 2
-            |> Array.map (Float.fromStringOrNum 50.0)
-        let meanScore = scores |> Array.average
-        let minScore = scores |> Array.min
-        let maxScore = scores |> Array.max
-
-        {
-            Name = name
-            Id = id
-            MeanScore = meanScore
-            MinScore = minScore
-            MaxScore = maxScore
-        }
-
-    let printSummary (student : Student) =
-        printfn "%s\t%s\t%0.2f\t%0.2f\t%0.2f" student.Name student.Id student.MeanScore student.MinScore student.MaxScore
-
-let summarize filePath = 
-    let rows = File.ReadAllLines filePath
-    let studentCount = rows.Length - 1
-    printfn "Student count %i" studentCount
-    rows
-    |> Array.skip 1
-    // Convert each line to a Student instance
-    |> Array.map Student.fromString
-    // Sort by mean score (descending)
-    |> Array.sortByDescending (fun student -> student.MeanScore) // lambda - 내림차순 MeanScore
-    //|> Array.sortBy (fun student -> student.Name) // lambda - 오름차순 이름 순서
-    // Print each Student instance
-    |> Array.iter Student.printSummary
+open StudentScores
 
 [<EntryPoint>]
 let main argv =
@@ -68,7 +8,7 @@ let main argv =
         let filePath = argv.[0]
         if IO.File.Exists filePath then
             printfn "Processing %s" filePath
-            summarize filePath
+            Summary.summarize filePath
             0
         else
             printfn "File not found: %s" filePath

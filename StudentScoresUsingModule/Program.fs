@@ -1,7 +1,7 @@
 open System
 open System.IO
 open StudentScores
-// StudentScores.txt, StudentScoresNA.txt
+// StudentScores.txt, StudentScoresNA.txt, StudentScoresAE.txt
 [<EntryPoint>]
 let main argv =
     if argv.Length = 1 then

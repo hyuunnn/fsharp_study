@@ -14,8 +14,8 @@ module SchoolCodes =
         //            let id = elements.[0] |> int
         //            let name = elements.[1]
         //            KeyValuePair.Create(id, name))
-        //new Dictionary<int, string>(pairs)
-        //new Dictionary<_, _>(pairs)
+        //new Dictionary<int, string>(pairs) // 값 변경 가능 (mutable)
+        //new Dictionary<_, _>(pairs) // 값 변경 가능 (mutable)
         
         File.ReadAllLines filePath
         |> Seq.skip 1
@@ -24,4 +24,4 @@ module SchoolCodes =
             let id = elements.[0] |> int
             let name = elements.[1]
             id, name)
-        |> dict
+        |> dict // 값 변경 불가 (immutable)
